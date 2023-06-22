@@ -1,0 +1,23 @@
+{    "version": "0.1.0",
+   
+    "name": "Summarizer Bot",
+   
+    "description": "A Bot for Summarizing text and youtube videos",
+    "permissions": [
+      "activeTab"
+    ],
+    "host_permissions": ["http://127.0.0.1:5000/predict"],
+    "icons": {
+      "16": "chatbot.png"
+     
+    },
+    "action": {
+      "default_icon": {
+        "16": "chatbot.png"
+      },
+      "default_popup": "popup.html"
+    },
+     "manifest_version": 3
+    
+  }
+  
