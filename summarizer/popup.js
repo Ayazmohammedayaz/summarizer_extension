@@ -47,12 +47,22 @@ class Chatbox {
         m = this.messages;
         console.log(m.length);
 
-        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.lang = "en";
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+            // Create speech recognition object
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+          
+            // Configure recognition settings
+            recognition.continuous = true;
+            recognition.lang = 'en';
+
+        // var SpeechRecognition = SpeechRecognition;
+        // const recognition = new SpeechRecognition();
+        // recognition.lang = "en";
         recognition.onstart = function () {
             console.log("listening");
         };
+   
 
         recognition.onspeechend = function () {
             console.log("end");
@@ -62,12 +72,14 @@ class Chatbox {
 
         recognition.onresult = function (event) {
             var transcript = event.results[0][0].transcript.toLowerCase();
-            const confidence = event.results[0][0].confidence;
+            //const confidence = event.results[0][0].confidence;
             console.log(transcript);
             console.log(typeof transcript);
             /*if (transcript == "stop") {
                       return;
                   }*/
+                
+           
 
             let msg1 = { name: "User", message: transcript };
             m.push(msg1);
@@ -156,6 +168,13 @@ class Chatbox {
         recognition.start();
     }
 
+else{
+    console.log("SPeech recognition not supported in this browser")
+
+}
+}
+
+
     onSendButton(chatbox) {
        // console.log("clicked");
         var textField = chatbox.querySelector("input");
@@ -191,7 +210,7 @@ class Chatbox {
                 textField.value = "";
             })
             .catch((error) => {
-                console.error("Error:", error);
+                console.log("Error:", error);
                 this.updateChatText(chatbox);
                 textField.value = "";
             });
