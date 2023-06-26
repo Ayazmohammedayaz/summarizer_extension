@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Assistant</title>
+    <style>
+        #input-container {
+            margin-bottom: 20px;
+        }
+        
+        #output-container {
+            margin-bottom: 20px;
+        }
+        
+        #voice-input {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voice Assistant</h1>
+    
+    <div id="input-container">
+        <input type="text" id="voice-input" placeholder="Speak your command">
+        <button onclick="startListening()">Start</button>
+        <button onclick="stopListening()">Stop</button>
+    </div>
+    
+    <div id="output-container">
+        <h3>Text Output:</h3>
+        <p id="text-output"></p>
+        
+        <h3>Voice Output:</h3>
+        <button onclick="speakOutput()">Speak</button>
+    </div>
+    
+    <script>
+        const voiceInput = document.getElementById('voice-input');
+        const textOutput = document.getElementById('text-output');
+        
+        let recognition;
+        let outputText = '';
+        
+        function startListening() {
+            if ('webkitSpeechRecognition' in window) {
+                recognition = new webkitSpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'en-US';
+                
+                recognition.onresult = function(event) {
+                    const interimTranscript = '';
+                    
+                    for (let i = event.resultIndex; i < event.results.length; ++i) {
+                        if (event.results[i].isFinal) {
+                            outputText += event.results[i][0].transcript + ' ';
+                        } else {
+                            interimTranscript += event.results[i][0].transcript;
+                        }
+                    }
+                    
+                    voiceInput.value = interimTranscript;
+                    textOutput.textContent = outputText;
+                };
+                
+                recognition.start();
+            } else {
+                alert('Speech recognition is not supported in this browser.');
+            }
+        }
+        
+        function stopListening() {
+            if (recognition) {
+                recognition.stop();
+            }
+        }
+        
+        function speakOutput() {
+            const msg = new SpeechSynthesisUtterance(outputText);
+            speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>
