@@ -23,11 +23,11 @@ def predict():
     if text.startswith("check grammar:"):
         response=grammar(text)
     elif len(text)>200:  
-        response=summarizer(text)
+        response=chatt5(text)
     elif text.startswith("https"):
         response=summary_api(text)
     else:
-        response=sum_gpt(text)
+        response=chatt5(text)
         
     response=str(response)
     clean_text = response.replace('<s>', "").replace('[','').replace(']','').replace("'","").replace("'","")

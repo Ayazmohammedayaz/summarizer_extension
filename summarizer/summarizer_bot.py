@@ -8,12 +8,11 @@ tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
 # mname = "facebook/blenderbot-400M-distill"
 # model = BlenderbotForConditionalGeneration.from_pretrained(mname)
 # tokenizer = BlenderbotTokenizer.from_pretrained(mname)
-#from transformers import T5ForConditionalGeneration, T5Tokenizer
-#model_name = 't5-base'
-#model = T5ForConditionalGeneration.from_pretrained(model_name)
-#tokenizer = T5Tokenizer.from_pretrained(model_name)
-#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
-#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
+from transformers import T5ForConditionalGeneration, T5Tokenizer
+model_name = 't5-base'
+model = T5ForConditionalGeneration.from_pretrained(model_name)
+tokenizer = T5Tokenizer.from_pretrained(model_name)
+
 import openai
 openai.api_key="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"
 
@@ -36,7 +35,7 @@ def chatt5(file):
     inputs = tokenizer.encode("summarize: " +file, return_tensors="pt", max_length=1000, truncation=True)
     #print(inputs)
 # Generate the summary
-    outputs = model.generate(inputs, max_length=150, num_beams=4, early_stopping=True)
+    outputs = model.generate(inputs, max_length=300, num_beams=4, early_stopping=True)
 #print(outputs)
 # Decode the generated summary
     summary = tokenizer.decode(outputs[0], skip_special_tokens=True)
@@ -47,7 +46,7 @@ def summary_api(url):
     #url = request.args.get('url', '')
     video_id = url.split('.be/')[1]
    #video_id='https://youtu.be/vzLmRomOP4Q'
-    summary = summarizer(get_transcript(video_id))
+    summary = chatt5(get_transcript(video_id))
     return summary
     #return summary, 200
 
