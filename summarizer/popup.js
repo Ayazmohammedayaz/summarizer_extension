@@ -56,9 +56,6 @@ class Chatbox {
             recognition.continuous = true;
             recognition.lang = 'en';
 
-        // var SpeechRecognition = SpeechRecognition;
-        // const recognition = new SpeechRecognition();
-        // recognition.lang = "en";
         recognition.onstart = function () {
             console.log("listening");
         };
@@ -75,12 +72,8 @@ class Chatbox {
             //const confidence = event.results[0][0].confidence;
             console.log(transcript);
             console.log(typeof transcript);
-            /*if (transcript == "stop") {
-                      return;
-                  }*/
-                
            
-
+        
             let msg1 = { name: "User", message: transcript };
             m.push(msg1);
 

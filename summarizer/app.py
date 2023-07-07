@@ -1,8 +1,5 @@
 from flask import Flask,render_template,request,jsonify
-#from chat import get_response
-#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
-from summarizer_bot import chat,summary_api,chatt5,summarizer,sum_gpt
-#from summ_pipe import summarizer1,summary_api1
+from summarizer_bot import chat,summary_api,summarizer
 from grammarly import grammar
 from flask_cors import CORS
 import json
@@ -23,19 +20,18 @@ def predict():
     if text.startswith("check grammar:"):
         response=grammar(text)
     elif len(text)>200:  
-        response=chatt5(text)
+        response=summarizer(text)
     elif text.startswith("https"):
         response=summary_api(text)
     else:
-        response=chatt5(text)
+        response="I can summarize lengthy texts, give it a try"
         
     response=str(response)
     clean_text = response.replace('<s>', "").replace('[','').replace(']','').replace("'","").replace("'","")
     response=clean_text
-        #clean_text=str(clean_text)
-    #response=get_response(text)
+     
     message={"answer":response}
-    return jsonify(message)#output giving to js 
+    return jsonify(message)
 
 
 
