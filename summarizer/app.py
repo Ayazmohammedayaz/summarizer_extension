@@ -1,5 +1,5 @@
 from flask import Flask,render_template,request,jsonify
-from summarizer_bot import chat,summary_api,summarizer
+from summarizer_bot import summary_api,summarizer
 from grammarly import grammar
 from flask_cors import CORS
 import json
